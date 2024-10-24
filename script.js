@@ -8,8 +8,8 @@ let cart = [];
 
 function displayProducts() {
   const productGrid = document.getElementById('product-grid');
-  productGrid.innerHTML = ''; // Clear previous content
-  
+  productGrid.innerHTML = '';
+
   products.forEach(product => {
     const productCard = `
       <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
@@ -31,18 +31,24 @@ function displayProducts() {
 document.addEventListener('click', function (event) {
   if (event.target.classList.contains('add-to-cart')) {
     const productId = event.target.getAttribute('data-id');
-    addToCart(productId);
+    addToCart(productId, event.target);
   }
 });
 
-function addToCart(id) {
+function addToCart(id, button) {
   const product = products.find(p => p.id == id);
-  
+
   if (product && product.stock > 0) {
     cart.push(product);
-    product.stock--; 
+    product.stock--;
+
     alert(`${product.name} added to the cart!`);
     
+    // Disable the button if the product is out of stock
+    if (product.stock === 0) {
+      button.disabled = true;
+    }
+
     updateProductList();
   } else {
     alert('Product out of stock!');
@@ -50,7 +56,7 @@ function addToCart(id) {
 }
 
 function updateProductList() {
-  displayProducts(); // Refresh the product list to show updated stock
+  displayProducts();
 }
 
 // Call displayProducts after the DOM is fully loaded
