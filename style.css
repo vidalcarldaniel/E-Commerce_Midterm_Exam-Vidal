@@ -3,6 +3,10 @@ body {
     background-size: cover;
 }
 
+h3, h1 {
+    color: aliceblue;
+}
+
 .product-card {
     border: 1px solid #ddd;
     border-radius: 10px;
